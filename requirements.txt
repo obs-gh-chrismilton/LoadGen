@@ -1,0 +1,4 @@
+# Run the following command to install all requirements:
+# pip install -r requirements.txt
+
+requests
