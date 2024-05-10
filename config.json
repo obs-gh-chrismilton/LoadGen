@@ -53,6 +53,7 @@
     ],
     "httpEndpoint": "http://example.com/upload",
     "token": "your_token_here",
-    "sleepTime": 1
+    "sleepTime": 1,
+    "hosts": []  
   }
   
