@@ -6,6 +6,17 @@ from faker import Faker
 
 fake = Faker()
 
+# Function to get latitude and longitude guaranteed to be on land in the US along with additional metadata
+def get_us_land_coordinates():
+    while True:
+        latitude, longitude, place_name, country_code, timezone = fake.location_on_land(coords_only=False)
+        if country_code == 'US':
+            # Splitting the place name to derive city and state information if possible
+            city_state = place_name.split(', ')
+            city = city_state[0] if len(city_state) > 0 else ""
+            state = city_state[1] if len(city_state) > 1 else ""
+            return latitude, longitude, city, state, country_code
+
 # Read the configuration from the config.json file
 def read_config(config_path):
     with open(config_path, 'r') as file:
@@ -23,24 +34,30 @@ def determine_log_message(metric, value):
             return f"{threshold['type']}: {threshold['message']} (Value: {value})"
     return "No specific log message for this value"
 
-# Generate or retrieve consistent dynamic source information using faker
+# Choose a hostname from config or generate dynamically
+def choose_hostname(config_hosts):
+    if config_hosts:
+        return random.choice(config_hosts)
+    return fake.hostname()
+
+# Initialize consistent geolocation data for each hostname
 def initialize_metric_info(metric, config_hosts):
-    hostname = choose_hostname(config_hosts) if config_hosts else fake.hostname()
+    hostname = choose_hostname(config_hosts)
     ip_address = fake.ipv4()
+    
+    # Get latitude, longitude, city, state, and country guaranteed to be on US land
+    latitude, longitude, city, state, country_code = get_us_land_coordinates()
+    
     dynamic_info = {
         "hostname": hostname,
         "ip_address": ip_address,
-        "city": fake.city(),
-        "state": fake.state(),
-        "country": "United States",
-        "latitude": float(fake.latitude()),
-        "longitude": float(fake.longitude())
+        "city": city,
+        "state": state,
+        "country": country_code,
+        "latitude": latitude,
+        "longitude": longitude
     }
     return dynamic_info
-
-# Choose a hostname from config or generate dynamically
-def choose_hostname(config_hosts):
-    return random.choice(config_hosts)
 
 # Send data to the HTTP endpoint
 def send_data(endpoint, token, data):
