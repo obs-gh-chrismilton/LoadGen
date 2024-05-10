@@ -2,6 +2,9 @@ import json
 import random
 import requests
 import time
+from faker import Faker
+
+fake = Faker()
 
 # Read the configuration from the config.json file
 def read_config(config_path):
@@ -20,6 +23,25 @@ def determine_log_message(metric, value):
             return f"{threshold['type']}: {threshold['message']} (Value: {value})"
     return "No specific log message for this value"
 
+# Generate or retrieve consistent dynamic source information using faker
+def initialize_metric_info(metric, config_hosts):
+    hostname = choose_hostname(config_hosts) if config_hosts else fake.hostname()
+    ip_address = fake.ipv4()
+    dynamic_info = {
+        "hostname": hostname,
+        "ip_address": ip_address,
+        "city": fake.city(),
+        "state": fake.state(),
+        "country": "United States",
+        "latitude": float(fake.latitude()),
+        "longitude": float(fake.longitude())
+    }
+    return dynamic_info
+
+# Choose a hostname from config or generate dynamically
+def choose_hostname(config_hosts):
+    return random.choice(config_hosts)
+
 # Send data to the HTTP endpoint
 def send_data(endpoint, token, data):
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
@@ -32,16 +54,24 @@ def main():
     http_endpoint = config['httpEndpoint']
     token = config['token']
     sleep_time = config['sleepTime']
+    config_hosts = config.get('hosts', [])
     
+    # Initialize consistent information for each metric
+    metric_info = {}
+    for metric in config['metrics']:
+        metric_info[metric['name']] = initialize_metric_info(metric, config_hosts)
+
     while True:
         for metric in config['metrics']:
             metric_value = simulate_metric_value(metric)
             log_message = determine_log_message(metric, metric_value)
+            dynamic_info = metric_info[metric['name']]
+
             data = {
                 "metric_name": metric['name'],
                 "value": metric_value,
                 "log_message": log_message,
-                "source": metric['source']
+                "source_info": dynamic_info
             }
             print(f"Sending data: {data}")
             status_code = send_data(http_endpoint, token, data)
