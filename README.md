@@ -3,6 +3,8 @@
 ## Overview
 This Load Generator Script is specifically designed to generate logs and metric data for loading simulated data into the Observe platform. It is an essential tool for the Observe technical teams to prove out or simulate environments for labs or customer demonstrations. By using this script, teams can understand system behaviors under various conditions and ensure that the Observe platform is optimally demonstrated and tested. The script's behavior is configured through a `config.json` file, which defines the metrics to be simulated, the hosts involved, and other operational parameters.
 
+As the script is updated, notifications will be posted in the #SEWest SLACK channel.
+
 ## Installation
 To use this script, you need Python installed on your system. Follow these steps to set up:
 
