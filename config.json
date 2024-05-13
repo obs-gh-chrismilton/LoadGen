@@ -1,59 +1,40 @@
 {
     "metrics": [
       {
-        "name": "Metric1",
-        "range": {"min": 10, "max": 50},
-        "thresholds": [
-          {"min": 10, "max": 20, "type": "Error", "message": "Value is between 10 and 20 for Metric1"},
-          {"min": 21, "max": 30, "type": "Success", "message": "Value is between 21 and 30 for Metric1"},
-          {"min": 31, "max": 40, "type": "Status", "message": "Value is between 31 and 40 for Metric1"}
-        ],
-        "source": "Node1"
-      },
-      {
-        "name": "Metric2",
-        "range": {"min": 5, "max": 25},
-        "thresholds": [
-          {"min": 5, "max": 10, "type": "Error", "message": "Value is between 5 and 10 for Metric2"},
-          {"min": 11, "max": 15, "type": "Success", "message": "Value is between 11 and 15 for Metric2"},
-          {"min": 16, "max": 20, "type": "Status", "message": "Value is between 16 and 20 for Metric2"}
-        ],
-        "source": "Node2"
-      },
-      {
-        "name": "Metric3",
+        "name": "cpu",
         "range": {"min": 0, "max": 100},
         "thresholds": [
-          {"min": 0, "max": 30, "type": "Error", "message": "Value is between 0 and 30 for Metric3"},
-          {"min": 31, "max": 60, "type": "Success", "message": "Value is between 31 and 60 for Metric3"},
-          {"min": 61, "max": 90, "type": "Status", "message": "Value is between 61 and 90 for Metric3"}
-        ],
-        "source": "Node3"
+          {"min": 0, "max": 50, "type": "Status", "message": "CPU utilization is normal"},
+          {"min": 51, "max": 75, "type": "Warning", "message": "CPU utilization is elevated"},
+          {"min": 76, "max": 100, "type": "Error", "message": "CPU utilization is critical"}
+        ]
       },
       {
-        "name": "Metric4",
-        "range": {"min": 200, "max": 500},
+        "name": "memory",
+        "range": {"min": 0, "max": 64},
         "thresholds": [
-          {"min": 200, "max": 300, "type": "Error", "message": "Value is between 200 and 300 for Metric4"},
-          {"min": 301, "max": 400, "type": "Success", "message": "Value is between 301 and 400 for Metric4"},
-          {"min": 401, "max": 500, "type": "Status", "message": "Value is between 401 and 500 for Metric4"}
-        ],
-        "source": "Node4"
+          {"min": 0, "max": 25, "type": "Status", "message": "Memory usage is normal"},
+          {"min": 26, "max": 50, "type": "Warning", "message": "Memory usage is elevated"},
+          {"min": 51, "max": 64, "type": "Error", "message": "Memory usage is critical"}
+        ]
       },
       {
-        "name": "Metric5",
-        "range": {"min": 1000, "max": 2000},
+        "name": "disk io",
+        "range": {"min": 0, "max": 1000},
         "thresholds": [
-          {"min": 1000, "max": 1200, "type": "Error", "message": "Value is between 1000 and 1200 for Metric5"},
-          {"min": 1201, "max": 1500, "type": "Success", "message": "Value is between 1201 and 1500 for Metric5"},
-          {"min": 1501, "max": 1800, "type": "Status", "message": "Value is between 1501 and 1800 for Metric5"}
-        ],
-        "source": "Node5"
+          {"min": 0, "max": 300, "type": "Status", "message": "Disk I/O is normal"},
+          {"min": 301, "max": 700, "type": "Warning", "message": "Disk I/O is elevated"},
+          {"min": 701, "max": 1000, "type": "Error", "message": "Disk I/O is critical"}
+        ]
       }
     ],
-    "httpEndpoint": "http://example.com/upload",
-    "token": "your_token_here",
-    "sleepTime": 1,
-    "hosts": []  
+    "hosts": [
+      {"hostname": "OBSRV-SRV-P01", "ip_address": "192.168.1.10"},
+      {"hostname": "OBSRV-SRV-P02", "ip_address": "192.168.1.11"},
+      {"hostname": "OBSRV-SRV-P03", "ip_address": "192.168.1.12"}
+    ],
+    "httpEndpoint": "https://############.collect.observeinc.com/v1/http",
+    "token": "YOUR TOKEN",
+    "sleepTime": 1
   }
   
