@@ -1,7 +1,7 @@
 # Load Generator Script README
 
 ## Overview
-This Load Generator Script is specifically designed to generate logs and metric data for loading simulated data into the Observe platform. Designed for use by Observe technical teams to prove out or simulate environments for labs or customer demonstrations. The script's behavior is configured through a `config.json` file, which defines the metrics to be simulated, the hosts involved, and other operational parameters.
+This Load Generator Script is specifically designed to generate logs and metric data for loading simulated data into the Observe platform. It is an essential tool for the Observe technical teams to prove out or simulate environments for labs or customer demonstrations. By using this script, teams can understand system behaviors under various conditions and ensure that the Observe platform is optimally demonstrated and tested. The script's behavior is configured through a `config.json` file, which defines the metrics to be simulated, the hosts involved, and other operational parameters.
 
 ## Installation
 To use this script, you need Python installed on your system. Follow these steps to set up:
@@ -41,5 +41,6 @@ The `config.json` file is central to how the script operates. Here’s how you c
 
 - **Fault Simulation**: Set thresholds to generate more critical errors and observe how your system responds to simulated faults.
 
+- **Geolocation Variation**: Although the script uses fixed geolocation data per host, modifying this in `config.json` to simulate different locations can help in testing location-based behaviors.
 
 By adjusting these settings and parameters in `config.json`, you can tailor the simulation to fit a wide range of testing and monitoring needs, making the script a versatile tool for demonstrating and testing the capabilities of the Observe platform.
