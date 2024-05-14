@@ -73,8 +73,8 @@
       "metadata": ["timestamp", "hostname", "debug_info", "user_id", "session_id"]
     }
   ],
-  "httpEndpoint": "https://153283189978.collect.observeinc.com/v1/http",
-  "token": "ds1a015fSglIae9roNcq:2n4F56X3g69DKDZtbJ8JUhLvbB7JZ9h6",
+  "httpEndpoint": "https://############.collect.observeinc.com/v1/http",
+  "token": "YOUR TOKEN",
   "sleepTime": 1,
   "appLogInterval": 5,
   "seed": 12345
