@@ -1,40 +1,81 @@
 {
-    "metrics": [
-      {
-        "name": "cpu",
-        "range": {"min": 0, "max": 100},
-        "thresholds": [
-          {"min": 0, "max": 50, "type": "Status", "message": "CPU utilization is normal"},
-          {"min": 51, "max": 75, "type": "Warning", "message": "CPU utilization is elevated"},
-          {"min": 76, "max": 100, "type": "Error", "message": "CPU utilization is critical"}
-        ]
-      },
-      {
-        "name": "memory",
-        "range": {"min": 0, "max": 64},
-        "thresholds": [
-          {"min": 0, "max": 25, "type": "Status", "message": "Memory usage is normal"},
-          {"min": 26, "max": 50, "type": "Warning", "message": "Memory usage is elevated"},
-          {"min": 51, "max": 64, "type": "Error", "message": "Memory usage is critical"}
-        ]
-      },
-      {
-        "name": "disk io",
-        "range": {"min": 0, "max": 1000},
-        "thresholds": [
-          {"min": 0, "max": 300, "type": "Status", "message": "Disk I/O is normal"},
-          {"min": 301, "max": 700, "type": "Warning", "message": "Disk I/O is elevated"},
-          {"min": 701, "max": 1000, "type": "Error", "message": "Disk I/O is critical"}
-        ]
-      }
-    ],
-    "hosts": [
-      {"hostname": "OBSRV-SRV-P01", "ip_address": "192.168.1.10"},
-      {"hostname": "OBSRV-SRV-P02", "ip_address": "192.168.1.11"},
-      {"hostname": "OBSRV-SRV-P03", "ip_address": "192.168.1.12"}
-    ],
-    "httpEndpoint": "https://############.collect.observeinc.com/v1/http",
-    "token": "YOUR TOKEN",
-    "sleepTime": 1
-  }
-  
+  "metrics": [
+    {
+      "name": "cpu",
+      "range": {"min": 0, "max": 100},
+      "thresholds": [
+        {"min": 0, "max": 50, "type": "info", "message": "CPU utilization is normal"},
+        {"min": 51, "max": 75, "type": "warning", "message": "CPU utilization is elevated"},
+        {"min": 76, "max": 100, "type": "error", "message": "CPU utilization is critical"}
+      ],
+      "log_conditions": [
+        {"condition": ">", "value": 75, "type": "error", "message": "CPU load exceeded 75%"}
+      ],
+      "log_metadata": ["timestamp", "hostname", "ip_address"]
+    },
+    {
+      "name": "memory",
+      "range": {"min": 0, "max": 64},
+      "thresholds": [
+        {"min": 0, "max": 25, "type": "info", "message": "Memory usage is normal"},
+        {"min": 26, "max": 50, "type": "warning", "message": "Memory usage is elevated"},
+        {"min": 51, "max": 64, "type": "error", "message": "Memory usage is critical"}
+      ],
+      "log_conditions": [
+        {"condition": ">", "value": 50, "type": "error", "message": "Memory load exceeded 50%"}
+      ],
+      "log_metadata": ["timestamp", "hostname", "ip_address"]
+    },
+    {
+      "name": "disk io",
+      "range": {"min": 0, "max": 1000},
+      "thresholds": [
+        {"min": 0, "max": 300, "type": "info", "message": "Disk I/O is normal"},
+        {"min": 301, "max": 700, "type": "warning", "message": "Disk I/O is elevated"},
+        {"min": 701, "max": 1000, "type": "error", "message": "Disk I/O is critical"}
+      ],
+      "log_conditions": [
+        {"condition": ">", "value": 700, "type": "error", "message": "Disk I/O exceeded 700"}
+      ],
+      "log_metadata": ["timestamp", "hostname", "ip_address"]
+    }
+  ],
+  "hosts": [
+    {"hostname": "OBSRV-SRV-P01"},
+    {"hostname": "OBSRV-SRV-P02"},
+    {"hostname": "OBSRV-SRV-P03"},
+    {"hostname": "OBSRV-SRV-P04"},
+    {"hostname": "OBSRV-SRV-P05"}
+  ],
+  "app_logs": [
+    {
+      "type": "info",
+      "message": "Application optimization and reinit process running",
+      "frequency": 10,
+      "event_code": "APP124",
+      "event_meaning": "Application Initialization",
+      "metadata": ["timestamp", "hostname", "service_name", "user_id", "session_id"]
+    },
+    {
+      "type": "error",
+      "message": "Application encountered an error. Cleaning up cache and relaunching",
+      "frequency": 50,
+      "event_code": "ERR438",
+      "event_meaning": "Runtime Error",
+      "metadata": ["timestamp", "hostname", "error_code", "user_id", "session_id"]
+    },
+    {
+      "type": "debug",
+      "message": "Debugging application flow",
+      "frequency": 100,
+      "event_code": "DBG802",
+      "event_meaning": "Debug Information",
+      "metadata": ["timestamp", "hostname", "debug_info", "user_id", "session_id"]
+    }
+  ],
+  "httpEndpoint": "https://153283189978.collect.observeinc.com/v1/http",
+  "token": "ds1a015fSglIae9roNcq:2n4F56X3g69DKDZtbJ8JUhLvbB7JZ9h6",
+  "sleepTime": 1,
+  "appLogInterval": 5,
+  "seed": 12345
+}
